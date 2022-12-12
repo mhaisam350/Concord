@@ -1,4 +1,4 @@
-# Concord
+# Discourse
 
 A React chatapp created for the purpose of learning Socket.IO.
  
