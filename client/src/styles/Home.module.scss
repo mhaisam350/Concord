@@ -1,0 +1,53 @@
+@import './variables';
+
+.main {
+    background-image: $bg-image;
+    background-repeat: repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.section {
+    background-color: $main;
+    width: 550px;
+    padding: 2em;
+}
+
+.logo {
+    text-align: center;
+    font-weight: 700;
+    font-size: 2em;
+    color: $logo
+}
+
+.homepage-form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.5em;
+
+    & > input, select {
+        margin: 1em 0;
+        padding: 0.5em 0.2em;
+        background-color: $primary;
+        border: 1px solid $primary;
+        border-radius: 5px;
+    }
+
+    & > select {
+        cursor: pointer;
+    }
+
+    & > button {
+        margin-top: 1em;
+        padding: 0.5em 0.2em;
+        background-color: $highlight;
+        border: 1px solid $highlight;
+        border-radius: 2px;
+        color: $main;
+        font-size: 1.1em;
+        font-weight: 500;
+        cursor: pointer;
+    }
+}
