@@ -1,1 +1,65 @@
 @import './variables';
+
+.main {
+    background-image: $bg-image;
+    background-repeat: repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.section {
+    background-color: $main;
+    width: 80%;
+    padding: 1.5em 2em;
+    border-radius: 10px;
+}
+
+// Chat header
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: $logo;
+    font-weight: 700;
+    font-size: 2em;
+}
+
+.leave-btn {
+    padding: 0.5em;
+    background-color: $highlight;
+    color: $main;
+    border: 1px solid $highlight;
+    border-radius: 7px;
+    color: $main;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+// Chat dashboard
+
+.chat-dashboard {
+    margin-top: 2em;
+    display: flex;
+    // justify-content: space-between;
+}
+
+.chat-details {
+    width: 20%;
+}
+
+.chat-window {
+    width: 80%;
+}
+
+// Chat input
+
+.chat-input {
+    padding: 1em 1.5em;
+}
