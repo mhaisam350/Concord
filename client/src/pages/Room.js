@@ -4,6 +4,9 @@ import { ChatDetails } from '../components/ChatDetails';
 
 export const Room = () => {
 
+    const room = 'Room 1';
+    const users = ['User1', 'User2'];
+
   return (
 
     <main className={styles.main}>
@@ -20,7 +23,7 @@ export const Room = () => {
             <section className={styles['chat-dashboard']}>
 
                 <section className={styles['chat-details']}>
-                    <ChatDetails />
+                    <ChatDetails room={room} users={users} />
                 </section>
 
                 <section className={styles['chat-window']}>
