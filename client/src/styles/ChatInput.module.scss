@@ -1,2 +1,20 @@
 @import './variables';
 
+.form {
+    display: flex;
+    align-items: center;
+}
+
+.textarea {
+    width: 100%;
+    height: 1.1em;
+    padding: 0.5em 0.5em;
+}
+
+.submit-btn {
+    padding: 0.5em;
+    background-color: $highlight;
+    color: $main;
+    border: 1px solid $highlight;
+    cursor: pointer;
+}
