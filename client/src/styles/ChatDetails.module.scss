@@ -1,0 +1,16 @@
+@import './variables';
+
+.detail-container {
+    margin-bottom: 1.5em;
+}
+
+.detail-heading {
+    font-size: 1.1em;
+    font-weight: 700;
+    margin-bottom: 0.7em;
+}
+
+.user:not(:last-child) {
+    margin-bottom: 0.5em;
+}
+
