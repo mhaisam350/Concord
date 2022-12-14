@@ -1,6 +1,7 @@
 import styles from '../styles/Room.module.scss';
 
 import { ChatDetails } from '../components/ChatDetails';
+import { ChatInput } from '../components/ChatInput';
 
 export const Room = () => {
 
@@ -33,9 +34,7 @@ export const Room = () => {
             </section>
 
             <section className={styles['chat-input']}>
-
-                Chat input
-
+                <ChatInput />
             </section>
 
         </section>
