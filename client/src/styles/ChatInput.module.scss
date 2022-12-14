@@ -9,6 +9,7 @@
     width: 100%;
     height: 1.1em;
     padding: 0.5em 0.5em;
+    border-radius: 5px 0 0 5px;
 }
 
 .submit-btn {
@@ -16,5 +17,6 @@
     background-color: $highlight;
     color: $main;
     border: 1px solid $highlight;
+    border-radius: 0 5px 5px 0;
     cursor: pointer;
 }
