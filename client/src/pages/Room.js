@@ -1,12 +1,18 @@
 import styles from '../styles/Room.module.scss';
 
 import { ChatDetails } from '../components/ChatDetails';
+import { ChatMessage } from '../components/ChatMessage';
 import { ChatInput } from '../components/ChatInput';
 
 export const Room = () => {
 
     const room = 'Room 1';
     const users = ['User1', 'User2'];
+    
+    const message = {
+        user: 'User1',
+        text: 'This is a text message.'
+    }
 
   return (
 
@@ -17,7 +23,7 @@ export const Room = () => {
             <section className={styles['chat-header']}>
 
                 <h1 className={styles.logo}>Discourse</h1>
-                <button className={styles['leave-btn']}>Leave Room</button>
+                <a href='/' className={styles['leave-link']}>Leave Room</a>
 
             </section>
 
@@ -28,7 +34,7 @@ export const Room = () => {
                 </section>
 
                 <section className={styles['chat-window']}>
-                    Chat window
+                    <ChatMessage message={message} />
                 </section>
                 
             </section>

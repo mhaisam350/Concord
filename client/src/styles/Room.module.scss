@@ -30,10 +30,11 @@
     font-size: 2em;
 }
 
-.leave-btn {
+.leave-link {
     padding: 0.5em;
     background-color: $highlight;
     color: $main;
+    text-decoration: none;
     border: 1px solid $highlight;
     border-radius: 7px;
     color: $main;
@@ -55,6 +56,8 @@
 
 .chat-window {
     width: 80%;
+    background-color: $primary;
+    height: 30em;
 }
 
 // Chat input
