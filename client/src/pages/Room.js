@@ -1,3 +1,7 @@
+import { useEffect } from 'react';
+
+import { io } from 'socket.io-client';
+
 import styles from '../styles/Room.module.scss';
 
 import { ChatDetails } from '../components/ChatDetails';
@@ -13,6 +17,10 @@ export const Room = () => {
         user: 'User1',
         text: 'This is a text message.'
     }
+
+    useEffect(() => {
+        const socket = io('http://localhost:4000');
+    }, [])
 
   return (
 
