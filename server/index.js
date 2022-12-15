@@ -21,8 +21,18 @@ const PORT = process.env.PORT;
 
 // Run on client connection
 
-io.on('connection', socket => {
-    console.log('User connected');
+io.on('connection', (socket) => {
+
+    // console.log('User connected');
+
+    socket.emit('message', 'Welcome to Discourse!');
+
+    socket.broadcast.emit('message', 'A user has joined the chat.');
+
+    socket.on('disconnect', () => {
+        io.emit('message', 'A user has left the chat.')
+    })
+
 })
 
 server.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

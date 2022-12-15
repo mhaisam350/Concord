@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
-import { io } from 'socket.io-client';
-
 import styles from '../styles/Room.module.scss';
+
+import { useSocketContext } from '../hooks/useSocketContext';
 
 import { ChatDetails } from '../components/ChatDetails';
 import { ChatMessage } from '../components/ChatMessage';
@@ -12,6 +12,8 @@ export const Room = () => {
 
     const room = 'Room 1';
     const users = ['User1', 'User2'];
+
+    const socket  = useSocketContext();
     
     const message = {
         user: 'User1',
@@ -19,8 +21,12 @@ export const Room = () => {
     }
 
     useEffect(() => {
-        const socket = io('http://localhost:4000');
-    }, [])
+
+        socket.on('message', message => {
+            console.log(message);
+        });
+
+    }, [socket])
 
   return (
 
