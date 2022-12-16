@@ -14,11 +14,11 @@ root.render(
 
     <BrowserRouter>
 
-      <SocketContextProvider>
+      {/* <SocketContextProvider> */}
 
         <App />
-        
-      </SocketContextProvider>
+
+      {/* </SocketContextProvider> */}
 
     </BrowserRouter>
     

@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 
 import styles from '../styles/Room.module.scss';
 
-import { useSocketContext } from '../hooks/useSocketContext';
+import { io } from 'socket.io-client';
 
 import { ChatDetails } from '../components/ChatDetails';
 import { ChatMessage } from '../components/ChatMessage';
 import { ChatInput } from '../components/ChatInput';
+
+let socket;
 
 export const Room = () => {
 
@@ -19,18 +21,19 @@ export const Room = () => {
     // }
 
     const [messages, setMessages] = useState([]);
-    
-    const socket  = useSocketContext();
 
     useEffect(() => {
+        
+        socket = io('http://localhost:4000');
 
         socket.on('message', message => {
 
             setMessages(messages => [...messages, message]);
+            console.log(message);
 
         });
 
-    }, [socket])
+    }, [])
 
   return (
 
@@ -56,7 +59,7 @@ export const Room = () => {
                     {messages?.map((message, index) => (
 
                         <div key={index}>
-                            <ChatMessage message={message} key={index} />
+                            <ChatMessage message={message} />
                         </div>
 
                     ))}
@@ -66,7 +69,7 @@ export const Room = () => {
             </section>
 
             <section className={styles['chat-input']}>
-                <ChatInput />
+                <ChatInput socket={socket} />
             </section>
 
         </section>
