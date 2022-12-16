@@ -6,8 +6,8 @@ export const ChatMessage = ({ message }) => {
 
     <div className={styles['message-container']}>
 
-      <p>{message.user}</p>
-      <p>{message.text}</p>
+      {/* <p>{message.user}</p> */}
+      <p>{message}</p>
 
     </div>
   

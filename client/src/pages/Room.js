@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import styles from '../styles/Room.module.scss';
 
@@ -13,17 +13,21 @@ export const Room = () => {
     const room = 'Room 1';
     const users = ['User1', 'User2'];
 
-    const socket  = useSocketContext();
+    // const message = {
+    //     user: 'User1',
+    //     text: 'This is a text message.'
+    // }
+
+    const [messages, setMessages] = useState([]);
     
-    const message = {
-        user: 'User1',
-        text: 'This is a text message.'
-    }
+    const socket  = useSocketContext();
 
     useEffect(() => {
 
         socket.on('message', message => {
-            console.log(message);
+
+            setMessages(messages => [...messages, message]);
+
         });
 
     }, [socket])
@@ -48,7 +52,15 @@ export const Room = () => {
                 </section>
 
                 <section className={styles['chat-window']}>
-                    <ChatMessage message={message} />
+
+                    {messages?.map((message, index) => (
+
+                        <div key={index}>
+                            <ChatMessage message={message} key={index} />
+                        </div>
+
+                    ))}
+
                 </section>
                 
             </section>
