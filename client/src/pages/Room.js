@@ -56,6 +56,8 @@ export const Room = () => {
 
                 <section className={styles['chat-window']}>
 
+                    <div className={styles['chat-content']}>
+
                     {messages?.map((message, index) => (
 
                         <div key={index}>
@@ -63,6 +65,8 @@ export const Room = () => {
                         </div>
 
                     ))}
+
+                    </div>
 
                 </section>
                 

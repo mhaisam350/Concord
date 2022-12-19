@@ -55,9 +55,12 @@
 }
 
 .chat-window {
+    display: flex;
+    flex-direction: column-reverse; // Display flex and flex direction make sure ChatWindow scrolls down with each new message
     width: 80%;
     background-color: $primary;
     height: 30em;
+    overflow-y: scroll;
 }
 
 // Chat input
