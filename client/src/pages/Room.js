@@ -29,7 +29,7 @@ export const Room = () => {
         socket.on('message', message => {
 
             setMessages(messages => [...messages, message]);
-            console.log(message);
+            // console.log(message.username);
 
         });
 
@@ -61,7 +61,7 @@ export const Room = () => {
                     {messages?.map((message, index) => (
 
                         <div key={index}>
-                            <ChatMessage message={message} />
+                            <ChatMessage username={message.username} text={message.text} time={message.time} />
                         </div>
 
                     ))}

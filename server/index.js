@@ -4,6 +4,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const { Server } = require('socket.io');
 
+const formatMessage = require('./utils/formatMessage');
+
 const app = express();
 app.use(cors());
 
@@ -13,6 +15,8 @@ const io = new Server(server, {
         origin: 'http://localhost:3000',
     },
 });
+
+const automatedSender = 'Discourse';
 
 // Set env file
 
@@ -25,16 +29,16 @@ io.on('connection', (socket) => {
 
     // console.log('User connected');
 
-    socket.emit('message', 'Welcome to Discourse!');
+    socket.emit('message', formatMessage(automatedSender, 'Welcome to Discourse!'));
 
-    socket.broadcast.emit('message', 'A user has joined the chat.');
+    socket.broadcast.emit('message', formatMessage(automatedSender, 'A user has joined the chat.'));
 
     socket.on('disconnect', () => {
-        io.emit('message', 'A user has left the chat.')
+        io.emit('message', formatMessage(automatedSender, 'A user has left the chat.'))
     });
 
     socket.on('chatMessage', message => {
-        io.emit('message', message);
+        io.emit('message', formatMessage('User', message));
     })
 
 });
