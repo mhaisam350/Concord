@@ -1,12 +1,8 @@
 import { useState } from 'react';
 
-// import { useSocketContext } from '../hooks/useSocketContext';
-
 import styles from '../styles/ChatInput.module.scss';
 
 export const ChatInput = ({ socket }) => {
-
-    // const socket = useSocketContext();
 
     const [message, setMessage] = useState('');
 
