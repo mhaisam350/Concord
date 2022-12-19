@@ -6,3 +6,9 @@
     margin: 2em;
     background-color: $secondary;
 }
+
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5em;
+}

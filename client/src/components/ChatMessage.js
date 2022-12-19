@@ -6,7 +6,11 @@ export const ChatMessage = ({ username, text, time }) => {
 
     <div className={styles['message-container']}>
 
-      {/* <p>{message.user}</p> */}
+      <div className={styles['flex-container']}>
+        <p>{username}</p>
+        <p>{time}</p>
+      </div>
+
       <p>{text}</p>
 
     </div>

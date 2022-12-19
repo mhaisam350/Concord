@@ -15,11 +15,6 @@ export const Room = () => {
     const room = 'Room 1';
     const users = ['User1', 'User2'];
 
-    // const message = {
-    //     user: 'User1',
-    //     text: 'This is a text message.'
-    // }
-
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
