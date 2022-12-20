@@ -12,14 +12,22 @@ let socket;
 
 export const Room = () => {
 
-    const room = 'Room 1';
+    // const room = 'Room 1';
     const users = ['User1', 'User2'];
 
+    const [username, setUsername] = useState('');
+    const [room, setRoom] = useState('');
     const [messages, setMessages] = useState([]);
+
+    // console.log(username);
+    // console.log(room);
 
     useEffect(() => {
         
         socket = io('http://localhost:4000');
+
+        setUsername(sessionStorage.getItem('username'));
+        setRoom(sessionStorage.getItem('room'));
 
         socket.on('message', message => {
 

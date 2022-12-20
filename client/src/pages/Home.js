@@ -6,14 +6,23 @@ import styles from '../styles/Home.module.scss';
 export const Home = () => {
 
     const [username, setUsername] = useState('');
-    const [room, setRoom] = useState('room1');
+    const [room, setRoom] = useState('Room 1');
 
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
 
         e.preventDefault();
-        navigate(`/room/${room}`);
+
+        sessionStorage.setItem('username', username);
+        sessionStorage.setItem('room', room);
+
+        // Remove spaces and lowercase room name for url
+
+        let roomPath = room.replace(/\s+/g, '');
+        roomPath = roomPath.toLocaleLowerCase();
+
+        navigate(`/room/${roomPath}`);
 
     }
 
@@ -32,8 +41,8 @@ export const Home = () => {
 
                     <label htmlFor='rooms'>Room</label>
                     <select name='rooms' onChange={(e) => setRoom(e.target.value)} value={room}>
-                        <option value='room1'>Room 1</option>
-                        <option value='room2'>Room 2</option>
+                        <option value='Room 1'>Room 1</option>
+                        <option value='Room 2'>Room 2</option>
                     </select>
 
                     <button type='submit'>Join Chat</button>
