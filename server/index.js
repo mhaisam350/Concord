@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const { Server } = require('socket.io');
 
 const formatMessage = require('./utils/formatMessage');
+const { userJoin, getCurrentUser, userLeave, getRoomUsers } = require('./utils/users');
 
 const app = express();
 app.use(cors());
@@ -27,19 +28,42 @@ const PORT = process.env.PORT;
 
 io.on('connection', (socket) => {
 
-    // console.log('User connected');
+    socket.on('joinRoom', ({ username, room }) => {
 
-    socket.emit('message', formatMessage(automatedSender, 'Welcome to Discourse!'));
+        const user = userJoin(socket.id, username, room);
+        // console.log(user);
 
-    socket.broadcast.emit('message', formatMessage(automatedSender, 'A user has joined the chat.'));
+        socket.join(user.room);
 
-    socket.on('disconnect', () => {
-        io.emit('message', formatMessage(automatedSender, 'A user has left the chat.'))
+        socket.emit('message', formatMessage(automatedSender, 'Welcome to Discourse!'));
+
+        socket.broadcast.to(user.room).emit('message', formatMessage(automatedSender, `${user.username} has joined the chat.`));
+
+        io.to(user.room).emit('roomUsers', getRoomUsers(user.room));
+
     });
 
     socket.on('chatMessage', message => {
-        io.emit('message', formatMessage('User', message));
-    })
+
+        const user = getCurrentUser(socket.id);
+
+        io.to(user.room).emit('message', formatMessage(user.username, message));
+
+    });
+
+    socket.on('disconnect', () => {
+
+        const user = userLeave(socket.id);
+
+        if (user) {
+
+            io.to(user.room).emit('message', formatMessage(automatedSender, `${user.username} has left the chat.`));
+
+            io.to(user.room).emit('roomUsers', getRoomUsers(user.room));
+
+        };
+
+    });
 
 });
 

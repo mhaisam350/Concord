@@ -13,21 +13,19 @@ let socket;
 
 export const Room = () => {
 
-    const users = ['User1', 'User2'];
-
     const navigate = useNavigate();
 
     const [username, setUsername] = useState('');
     const [room, setRoom] = useState('');
     const [messages, setMessages] = useState([]);
-
-    // console.log(username);
-    // console.log(room);
+    const [roomUsers, setRoomUsers] = useState([]);
 
     const handleClick = () => {
 
         // sessionStorage.removeItem('username');
         sessionStorage.removeItem('room');
+
+        socket.disconnect();
 
         navigate('/');
 
@@ -43,11 +41,25 @@ export const Room = () => {
         socket.on('message', message => {
 
             setMessages(messages => [...messages, message]);
-            // console.log(message.username);
+
+        });
+
+        socket.on('roomUsers', roomUsersArray => {
+
+            setRoomUsers(roomUsersArray);
 
         });
 
     }, [])
+
+    useEffect(() => {
+
+        if (username && room) {
+            socket.emit('joinRoom', { username, room });
+        };
+
+
+    }, [username, room])
 
   return (
 
@@ -65,7 +77,7 @@ export const Room = () => {
             <section className={styles['chat-dashboard']}>
 
                 <section className={styles['chat-details']}>
-                    <ChatDetails room={room} users={users} />
+                    <ChatDetails room={room} users={roomUsers} />
                 </section>
 
                 <section className={styles['chat-window']}>
