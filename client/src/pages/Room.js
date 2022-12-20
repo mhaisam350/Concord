@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import styles from '../styles/Room.module.scss';
 
@@ -12,8 +13,9 @@ let socket;
 
 export const Room = () => {
 
-    // const room = 'Room 1';
     const users = ['User1', 'User2'];
+
+    const navigate = useNavigate();
 
     const [username, setUsername] = useState('');
     const [room, setRoom] = useState('');
@@ -21,6 +23,15 @@ export const Room = () => {
 
     // console.log(username);
     // console.log(room);
+
+    const handleClick = () => {
+
+        // sessionStorage.removeItem('username');
+        sessionStorage.removeItem('room');
+
+        navigate('/');
+
+    }
 
     useEffect(() => {
         
@@ -47,7 +58,7 @@ export const Room = () => {
             <section className={styles['chat-header']}>
 
                 <h1 className={styles.logo}>Discourse</h1>
-                <a href='/' className={styles['leave-link']}>Leave Room</a>
+                <button className={styles['leave-btn']} onClick={handleClick}>Leave Room</button>
 
             </section>
 

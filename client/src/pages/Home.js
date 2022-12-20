@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import styles from '../styles/Home.module.scss';
@@ -25,6 +25,16 @@ export const Home = () => {
         navigate(`/room/${roomPath}`);
 
     }
+
+    useEffect(() => {
+
+        let savedUsername = sessionStorage.getItem('username');
+
+        if (savedUsername) {
+            setUsername(savedUsername);
+        };
+
+    }, [])
 
   return (
 
