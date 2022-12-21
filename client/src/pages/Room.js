@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import styles from '../styles/Room.module.scss';
 
@@ -14,6 +14,8 @@ let socket;
 export const Room = () => {
 
     const navigate = useNavigate();
+
+    const { name } = useParams();
 
     const [username, setUsername] = useState('');
     const [room, setRoom] = useState('');
@@ -60,6 +62,26 @@ export const Room = () => {
 
 
     }, [username, room])
+
+    useEffect(() => {
+
+        let roomPath = room.replace(/\s+/g, '');
+        roomPath = roomPath.toLocaleLowerCase();
+
+        if (room.length === 0) {
+            return;
+        }
+
+        // Redirect to Home if room name and url paramater aren't the same
+
+        if (roomPath !== name) {
+
+            socket.disconnect();
+
+            navigate('/');
+        }
+
+    }, [room, name])
 
   return (
 
