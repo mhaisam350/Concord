@@ -81,7 +81,7 @@ export const Room = () => {
             navigate('/');
         }
 
-    }, [room, name])
+    }, [room, name, navigate])
 
   return (
 
