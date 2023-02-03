@@ -10,14 +10,24 @@ const { userJoin, getCurrentUser, userLeave, getRoomUsers } = require('./utils/u
 const app = express();
 app.use(cors());
 
+// app.options('*', (req, res) => {
+//     res.set('Access-Control-Allow-Origin', '*');
+//     res.send('ok');
+//   });
+  
+//   app.use((req, res) => {
+//     res.set('Access-Control-Allow-Origin', '*');
+//   });
+
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: 'http://localhost:3000',
+        origin: ['http://192.168.18.13:3000', 'http://localhost:3000'],
     },
 });
 
 const automatedSender = 'Discourse';
+const automatedMessageColor = '#FF0000'
 
 // Set env file
 
@@ -28,16 +38,18 @@ const PORT = process.env.PORT;
 
 io.on('connection', (socket) => {
 
-    socket.on('joinRoom', ({ username, room }) => {
+    // console.log(socket.id);
 
-        const user = userJoin(socket.id, username, room);
+    socket.on('joinRoom', ({ username, room, color }) => {
+
+        const user = userJoin(socket.id, username, room, color);
         // console.log(user);
 
         socket.join(user.room);
 
-        socket.emit('message', formatMessage(automatedSender, 'Welcome to Discourse!'));
+        socket.emit('message', formatMessage(automatedSender, 'Welcome to Discourse!', automatedMessageColor));
 
-        socket.broadcast.to(user.room).emit('message', formatMessage(automatedSender, `${user.username} has joined the chat.`));
+        socket.broadcast.to(user.room).emit('message', formatMessage(automatedSender, `${user.username} has joined the chat.`, automatedMessageColor));
 
         io.to(user.room).emit('roomUsers', getRoomUsers(user.room));
 
@@ -47,7 +59,7 @@ io.on('connection', (socket) => {
 
         const user = getCurrentUser(socket.id);
 
-        io.to(user.room).emit('message', formatMessage(user.username, message));
+        io.to(user.room).emit('message', formatMessage(user.username, message, user.color));
 
     });
 
@@ -57,7 +69,7 @@ io.on('connection', (socket) => {
 
         if (user) {
 
-            io.to(user.room).emit('message', formatMessage(automatedSender, `${user.username} has left the chat.`));
+            io.to(user.room).emit('message', formatMessage(automatedSender, `${user.username} has left the chat.`, automatedMessageColor));
 
             io.to(user.room).emit('roomUsers', getRoomUsers(user.room));
 

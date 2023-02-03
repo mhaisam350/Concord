@@ -3,6 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import styles from '../styles/Room.module.scss';
 
+import { generateColor } from '../utils/generateColor';
+
 import { io } from 'socket.io-client';
 
 import { ChatDetails } from '../components/ChatDetails';
@@ -24,7 +26,6 @@ export const Room = () => {
 
     const handleClick = () => {
 
-        // sessionStorage.removeItem('username');
         sessionStorage.removeItem('room');
 
         socket.disconnect();
@@ -35,7 +36,7 @@ export const Room = () => {
 
     useEffect(() => {
         
-        socket = io('http://localhost:4000');
+        socket = io('http://192.168.18.13:4000');
 
         setUsername(sessionStorage.getItem('username'));
         setRoom(sessionStorage.getItem('room'));
@@ -57,7 +58,11 @@ export const Room = () => {
     useEffect(() => {
 
         if (username && room) {
-            socket.emit('joinRoom', { username, room });
+
+            let color = generateColor();
+
+            socket.emit('joinRoom', { username, room, color });
+
         };
 
 
@@ -99,7 +104,7 @@ export const Room = () => {
             <section className={styles['chat-dashboard']}>
 
                 <section className={styles['chat-details']}>
-                    <ChatDetails room={room} users={roomUsers} />
+                    <ChatDetails room={room} users={roomUsers} username={username} />
                 </section>
 
                 <section className={styles['chat-window']}>
@@ -108,9 +113,7 @@ export const Room = () => {
 
                     {messages?.map((message, index) => (
 
-                        <div key={index}>
-                            <ChatMessage username={message.username} text={message.text} time={message.time} />
-                        </div>
+                        <ChatMessage key={index} username={username} sender={message.username} text={message.text} time={message.time} color={message.color} />
 
                     ))}
 
