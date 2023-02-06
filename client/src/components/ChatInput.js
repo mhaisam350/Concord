@@ -1,10 +1,16 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+
+import moment from 'moment';
 
 import styles from '../styles/ChatInput.module.scss';
 
 export const ChatInput = ({ socket }) => {
 
+    const inputRef = useRef();
+
     const [message, setMessage] = useState('');
+
+    let time;
 
     const handleSubmit = (e) => {
 
@@ -14,13 +20,16 @@ export const ChatInput = ({ socket }) => {
 
         if (message.trim().length === 0) return;
 
-        // Emit message to server
+        time = moment().format('h:mm a');
 
-        socket.emit('chatMessage', message);
+        // Emit message to server
+        socket.emit('chatMessage', { message, time });
 
         // Reset message input to empty
-
         setMessage('');
+
+        // Keep focus on input after message sent
+        inputRef.current?.focus();
 
     }
 
@@ -29,14 +38,17 @@ export const ChatInput = ({ socket }) => {
         if (message.trim().length === 0) return;
 
         // Check if Enter key is pressed
-        
-        if (e.keyCode === 13) {
+        if (e.keyCode === 13 && !e.shiftKey) {
 
             e.preventDefault();
 
-            socket.emit('chatMessage', message);
+            time = moment().format('h:mm a');
+
+            socket.emit('chatMessage', { message, time });
             
             setMessage('');
+
+            inputRef.current?.focus();
 
         }
 
@@ -46,7 +58,7 @@ export const ChatInput = ({ socket }) => {
 
     <form onSubmit={handleSubmit} onKeyDown={handleEnter} className={styles.form}>
     
-        <textarea name='chat-input' placeholder='Type a message' value={message} onChange={(e) => setMessage(e.target.value)} className={styles.textarea} />
+        <textarea ref={inputRef} name='chat-input' placeholder='Type a message' value={message} onChange={(e) => setMessage(e.target.value)} className={styles.textarea} />
 
         <button type='submit' className={styles['submit-btn']}>Send</button>
 

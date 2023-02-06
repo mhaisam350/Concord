@@ -1,13 +1,14 @@
 const express = require('express');
+const helmet = require('helmet');
 const http = require('http');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const { Server } = require('socket.io');
-
 const formatMessage = require('./utils/formatMessage');
 const { userJoin, getCurrentUser, userLeave, getRoomUsers } = require('./utils/users');
 
 const app = express();
+app.use(helmet());
 app.use(cors());
 
 // app.options('*', (req, res) => {
@@ -55,11 +56,11 @@ io.on('connection', (socket) => {
 
     });
 
-    socket.on('chatMessage', message => {
+    socket.on('chatMessage', ({ message, time }) => {
 
         const user = getCurrentUser(socket.id);
 
-        io.to(user.room).emit('message', formatMessage(user.username, message, user.color));
+        io.to(user.room).emit('message', formatMessage(user.username, message, user.color, time));
 
     });
 

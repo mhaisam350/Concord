@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import moment from 'moment';
+
 import styles from '../styles/Room.module.scss';
 
 import { generateColor } from '../utils/generateColor';
@@ -38,6 +40,9 @@ export const Room = () => {
         
         socket = io('http://192.168.18.13:4000');
 
+        // Redirect to Home if room name and url paramater aren't set
+        if (!sessionStorage.getItem('username') || !sessionStorage.getItem('room')) navigate('/');
+
         setUsername(sessionStorage.getItem('username'));
         setRoom(sessionStorage.getItem('room'));
 
@@ -53,7 +58,7 @@ export const Room = () => {
 
         });
 
-    }, [])
+    }, [navigate])
 
     useEffect(() => {
 
@@ -61,7 +66,9 @@ export const Room = () => {
 
             let color = generateColor();
 
-            socket.emit('joinRoom', { username, room, color });
+            let time = moment().format('h:mm a');
+
+            socket.emit('joinRoom', { username, room, color, time });
 
         };
 
@@ -78,7 +85,6 @@ export const Room = () => {
         }
 
         // Redirect to Home if room name and url paramater aren't the same
-
         if (roomPath !== name) {
 
             socket.disconnect();
