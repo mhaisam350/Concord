@@ -1,9 +1,36 @@
-# Discourse
+# Discourse 
+## (This repo is not longer updated - please see individual client and server repositories)
 
-A React chatapp created for the purpose of learning Socket.IO.
+A React chatapp that allows users to enter a specific room and communicate with room members via text communication in real-time.
  
-## Features
+## Technologies
 
-- Users can input a username and select a chat room to join.
-- Users can send and receive messages to and from other users in the same room.
-- Currently connected users are displayed in the sidebar.
+- React
+- SocketIO
+- NodeJS
+- ExpressJS
+- SCSS
+
+## Client / Server Repo Links
+
+- Client: https://github.com/mhaisam350/discourse-client
+- Server: https://github.com/mhaisam350/discourse-server
+
+## Setup
+
+### Server
+
+```
+$ cd ../discourse-server
+$ npm install
+$ npm run dev
+```
+
+
+### Client
+
+```
+$ cd ../discourse-client
+$ npm install
+$ npm start
+```
